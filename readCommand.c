@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * readCommand - function to take users input
+ * readCommand - function to take user's input
  * Return: size (numbers if characters that users input)
  */
 
@@ -15,15 +15,14 @@ int readCommand(void)
 	size = getline(&buff,  &n, stdin);
 	if (size == -1)
 	{
-		if (stdin != NULL)
+		if (buff == NULL)
 		{
-			free(buff);
-			exit(0);
+			perror("getline failed");
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
 		perror("input error");
-		free(buff);
 		}
 	}
 	free(buff);
