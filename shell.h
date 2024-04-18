@@ -5,6 +5,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-int readCommand(void);
+int readCommand(char *args[]);
 
 #endif
