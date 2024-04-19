@@ -10,7 +10,7 @@
  * Return: size (numbers if characters that users input)
  */
 
-int readCommand(char *args[])
+int readCommand(char **argv, char **env)
 {
 	size_t n = 0;
 	char *buff = NULL;
@@ -42,6 +42,7 @@ int readCommand(char *args[])
 			token = strtok(NULL, " /n");
 		}
 		args[i] = NULL; /* to mark the end of the args*/
+		exeCmd(argC, argv, env);
 	}
 	free(buff);
 	return (size);

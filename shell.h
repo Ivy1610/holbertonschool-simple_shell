@@ -6,5 +6,7 @@
 #include <stdlib.h>
 
 int readCommand(char *args[]);
+char *getPath(char **env);
+int exeCmd(char *args[], char **argv, char **env);
 
 #endif
