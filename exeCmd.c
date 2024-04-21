@@ -7,7 +7,7 @@
  * Return: 0 if success
  */
 
-int exeCmd(char *args[], char **argv, char **env)
+int exeCmd(char *argsC[], char **argv, char **env)
 {
 	pid_t pid;
 	int exe, status;
@@ -21,7 +21,7 @@ int exeCmd(char *args[], char **argv, char **env)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-		exe = execve(argsC[0], argsC[0], argsC, NULL);
+		exe = execve(argsC[0], argsC, NULL);
 	if (exe == -1)
 	{
 		perror(argv[0]);

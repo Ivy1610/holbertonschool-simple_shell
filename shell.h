@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
-
+#include <signal.h>
+#include <sys/wait.h>
 int readCommand(char *args[]);
 char *getPath(char **env);
-int exeCmd(char *args[], char **argv, char **env);
+int exeCmd(char *argsC[], char **argv, char **env);
 
 #endif
