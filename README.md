@@ -1,9 +1,9 @@
-#Simple Shell
+# Simple Shell
 
 
-##Learning Objectives
+## Learning Objectives
 
-#General
+# General
 
 * Who designed and implemented the original Unix operating system
 * Who wrote the first version of the UNIX shell
@@ -21,10 +21,10 @@
 * What is EOF / “end-of-file”?
 
 
-##Requirements
+## Requirements
 
 
-#General
+# General
 
 * Allowed editors: vi, vim, emacs
 * All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra
@@ -36,7 +36,7 @@
 * All your header files should be include guarded
 * Use system calls only when you need to (why?)
 
-##More Info
+## More Info
 
 #Output
 
@@ -85,7 +85,7 @@
 * write (man 2 write)
 
 
-##Compilation
+### Compilation
 
 Your shell will be compiled this way:
 
@@ -120,6 +120,7 @@ $
 ## Installation
 1.Clone the repo 
 ```bash
+https://github.com/Ivy1610/holbertonschool-simple_shell.git
 
 ##Tasks
 
