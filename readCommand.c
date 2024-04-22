@@ -29,7 +29,6 @@ char readCommand(char **argv, char **env)
 		exit(EXIT_FAILURE);
 	}
 
-
 	if (buff[size - 1] == '\n')
 	{
 		buff[size - 1] = '\0';
@@ -42,7 +41,7 @@ char readCommand(char **argv, char **env)
 		argv[argCount++] = token;
 		token = strtok(NULL, " /n");
 	}
-	argv[argCount] = NULL; 
+	argv[argCount] = NULL;
 
 	if (argv[0] != NULL)
 	{

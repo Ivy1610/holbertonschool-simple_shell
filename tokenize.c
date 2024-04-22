@@ -2,21 +2,21 @@
 
 /**
  * tokenize - function to help tokenize users input
- * @ArgC: storage for tokens
+ * @Args: storage for tokens
  * @command: command received from the user
  * Return: number of tokens
  */
 
-int tokenize(char *command, char *ArgsC[])
+int tokenize(char *command, char *Args[])
 {
 	char *delimit = " ", *token;
 	int count = 0;
 
 	token = strtok(command, delimit);
 
-	while(token)
+	while (token)
 	{
-		ArgsC[count++] = token;
+		Args[count++] = token;
 		token = strtok(NULL, delimit);
 	}
 	return (count);

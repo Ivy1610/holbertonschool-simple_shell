@@ -1,27 +1,6 @@
 #include "shell.h"
 #include <string.h>
 #include <unistd.h>
-
-/** function to use pathKey
- *@env: array of pointers to string
- * environ: name of the environment variable
- **/
-
-char *_getenv(char **env, const char *path)
-{
-	int i = 0;
-
-	while (env[i] != NULL)
-	{
-		if (strncmp(env[i], path, strlen(path)) == 0 && (env[i])[strlen(path)] == '/')
-		{
-			return (env[i] + strlen(path) + 1);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
 /**
 * getPath - function to get path from the environment
 * @env: environment variable
@@ -46,21 +25,18 @@ char *getPath(char **env, const char *getCmd)
 		fprintf(stderr, "unable to allocate buffer\n");
 		exit(EXIT_FAILURE);
 	}
-	path = strtok(pathCopy, "/");
 
-	while (path != NULL)
+	for (char *path = strtok(pathCopy, "/");
+			path != NULL; path = strtok(NULL, "/"))
 	{
 		cmdValueSize = strlen(path) + strlen(getCmd) + 2;
-		cmdValue = (char *)malloc(cmdValueSize);
-
+		cmdValue = malloc(cmdValueSize);
 		if (cmdValue == NULL)
 		{
 			fprintf(stderr, "unable to allocate buffer\n");
 			exit(EXIT_FAILURE);
 		}
-		strcpy(cmdValue, path);
-		strcat(cmdValue, "/");
-		strcat(cmdValue, getCmd);
+		sprintf(cmdValue, "%s/%s", path, getCmd);
 
 		if (access(cmdValue, X_OK) == 0)
 		{
@@ -68,7 +44,6 @@ char *getPath(char **env, const char *getCmd)
 			return (cmdValue);
 		}
 		free(cmdValue);
-		path = strtok(NULL, "/");
 	}
 	free(pathCopy);
 	return (NULL);

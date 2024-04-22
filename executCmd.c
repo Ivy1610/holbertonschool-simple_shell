@@ -10,37 +10,32 @@
  * @env: array of strings representing the environment variables
  * Return: 0 on success, -1 on failure.
  */
-
 int exeCmd(char *args[], char **env)
 {
-	pid_t pid;
-	int status;
-	char *path;
-	
+	pid_t pid = fork();
+	char *newArgs[] = { "/bin/ls", "-l", NULL};
+	char *path = getPath(env, args[0]);
 
-	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
-		return (-1);
+		perror("fork failed");
+		exit(EXIT_FAILURE);
 	}
-	if (pid == 0)
+	else if (pid == 0)
 	{
 		path = getPath(env, args[0]);
 		if (path == NULL)
 		{
-			fprintf(stderr, "PATH environment variable not found\n");
+			fprintf(stderr, "Command not found: %s\n", args[0]);
 			exit(EXIT_FAILURE);
 		}
-		if (execve(path, args, env) == -1)
-		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
-		}
+		execve(path, newArgs, env);
+		perror("execve failed");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		wait(NULL);
 	}
 	return (0);
 }

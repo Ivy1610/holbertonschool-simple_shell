@@ -16,12 +16,10 @@ int main(void)
 	char *args[MAX_ARGS];
 	char *env[] = {"PATH=/bin/ls, NULL"};
 
-
 	while (1)
 	{
 		printf("CisNotFun;)$ ");
 		fflush(stdout);
-
 		if (readCommand(args, env) == -1)
 		{
 			break;
@@ -30,7 +28,7 @@ int main(void)
 		{
 			if (exeCmd(args, env) == -1)
 			{
-				fprintf(stderr, "Error: %s\n",args[0]);
+				fprintf(stderr, "Error: %s\n", args[0]);
 			}
 		}
 	}
