@@ -11,6 +11,8 @@
 
 char readCommand(char **argv, char **env);
 char *getPath(char **env, const char *getCmd);
-char exeCmd(char *args[], char **env);
+int exeCmd(char *args[], char **env);
+char **splitLine(char *line);
+
 
 #endif

@@ -13,7 +13,7 @@ char *_getenv(char **env, const char *path)
 
 	while (env[i] != NULL)
 	{
-		if (strncmp(env[i], path, strlen(path)) == 0 && (env[i])[strlen(path)] == '=')
+		if (strncmp(env[i], path, strlen(path)) == 0 && (env[i])[strlen(path)] == '/')
 		{
 			return (env[i] + strlen(path) + 1);
 		}
@@ -46,7 +46,7 @@ char *getPath(char **env, const char *getCmd)
 		fprintf(stderr, "unable to allocate buffer\n");
 		exit(EXIT_FAILURE);
 	}
-	path = strtok(pathCopy, "=");
+	path = strtok(pathCopy, "/");
 
 	while (path != NULL)
 	{
@@ -68,7 +68,7 @@ char *getPath(char **env, const char *getCmd)
 			return (cmdValue);
 		}
 		free(cmdValue);
-		path = strtok(NULL, "=");
+		path = strtok(NULL, "/");
 	}
 	free(pathCopy);
 	return (NULL);

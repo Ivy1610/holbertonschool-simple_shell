@@ -11,19 +11,20 @@
  * Return: 0 on success, -1 on failure.
  */
 
-char exeCmd(char *args[], char **env)
+int exeCmd(char *args[], char **env)
 {
 	pid_t pid;
 	int status;
 	char *path;
+	
 
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
-	else if (pid == 0)
+	if (pid == 0)
 	{
 		path = getPath(env, args[0]);
 		if (path == NULL)
@@ -31,15 +32,15 @@ char exeCmd(char *args[], char **env)
 			fprintf(stderr, "PATH environment variable not found\n");
 			exit(EXIT_FAILURE);
 		}
-		if (execve(args[0], args, env) == -1)
-			{
-				perror(args[0]);
-				exit(EXIT_FAILURE);
-			}
-			else
-			{
-				waitpid(pid, &status, 0);
-			}
+		if (execve(path, args, env) == -1)
+		{
+			perror(args[0]);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
 	}
 	return (0);
 }

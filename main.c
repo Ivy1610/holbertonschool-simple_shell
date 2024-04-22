@@ -14,7 +14,7 @@
 int main(void)
 {
 	char *args[MAX_ARGS];
-	char *env[] = {NULL};
+	char *env[] = {"PATH=/bin/ls, NULL"};
 
 
 	while (1)

@@ -20,8 +20,6 @@ char readCommand(char **argv, char **env)
 	char *token;
 	int argCount = 0;
 
-	printf("CisNotFun;)$ ");
-
 	size = getline(&buff, &n, stdin);
 
 	if (size == -1)
