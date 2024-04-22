@@ -7,42 +7,48 @@
 
 /**
  * readCommand - function to take user's input
+ * @argv: array of strings to arguments
+ * @env: array of string representing the environment variable
  * Return: size (numbers if characters that users input)
  */
 
-int readCommand(char **argv, char **env)
+char readCommand(char **argv, char **env)
 {
 	size_t n = 0;
 	char *buff = NULL;
 	int size;
+	char *token;
+	int argCount = 0;
 
-	printf("$ ");
-	size = getline(&buff,  &n, stdin);
-	/*the condition (stdin != NULL) is unnecessary cuz stdin is always valid (stdin is a predefined file pointer)*/
+	printf("CisNotFun;)$ ");
+
+	size = getline(&buff, &n, stdin);
+
 	if (size == -1)
 	{
-		if (buff == NULL)
-		{
-			perror("getline failed");
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-		perror("input error");
-		}
+		perror("getline failed");
+		free(buff);
+		exit(EXIT_FAILURE);
 	}
-	else
-	/*tokenize the input string so that we canseparate the command and its arguments and store it in the args array.*/
+
+
+	if (buff[size - 1] == '\n')
 	{
-		char *token = strtok(buff, " /n");
-		int i = 0;
-		while (token != NULL && i < MAX_ARGS - 1)
-		{
-			args[i++] = token;
-			token = strtok(NULL, " /n");
-		}
-		args[i] = NULL; /* to mark the end of the args*/
-		exeCmd(argC, argv, env);
+		buff[size - 1] = '\0';
+	}
+
+	token = strtok(buff, " /n");
+
+	while (token != NULL && argCount < MAX_ARGS - 1)
+	{
+		argv[argCount++] = token;
+		token = strtok(NULL, " /n");
+	}
+	argv[argCount] = NULL; 
+
+	if (argv[0] != NULL)
+	{
+		exeCmd(argv, env);
 	}
 	free(buff);
 	return (size);

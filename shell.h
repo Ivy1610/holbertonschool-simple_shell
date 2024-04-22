@@ -5,8 +5,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-int readCommand(char *args[]);
-char *getPath(char **env);
-int exeCmd(char *args[], char **argv, char **env);
+char readCommand(char **argv, char **env);
+char *getPath(char **env, const char *getCmd);
+char exeCmd(char *args[], char **env);
+
 
 #endif

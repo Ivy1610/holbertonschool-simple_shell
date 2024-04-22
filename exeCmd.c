@@ -1,33 +1,45 @@
 #include "shell.h"
-
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 /**
  * exeCmd - function to execute user's command
- * @argsC: array of commands from the users
- * @argv: argument
- * Return: 0 if success
+ * @args: array of strings containing the command and its arguments
+ * @env: array of strings representing the environment variables
+ * Return: 0 on success, -1 on failure.
  */
 
-int exeCmd(char *args[], char **argv, char **env)
+char exeCmd(char *args[], char **env)
 {
 	pid_t pid;
-	int exe, status;
+	int status;
+	char *path;
 
 	pid = fork();
-	char *path = getPath(env);
-	printf("%s", path);
 	if (pid == -1)
 	{
-		perror("Create process failed");
+		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-		exe = execve(argsC[0], argsC[0], argsC, NULL);
-	if (exe == -1)
 	{
-		perror(argv[0]);
-		exit(EXIT_FAILURE);
+		path = getPath(env, args[0]);
+		if (path == NULL)
+		{
+			fprintf(stderr, "PATH environment variable not found\n");
+			exit(EXIT_FAILURE);
+		}
+		if (execve(args[0], args, env) == -1)
+			{
+				perror(args[0]);
+				exit(EXIT_FAILURE);
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+			}
 	}
-	else wait(&status);
-
 	return (0);
 }
