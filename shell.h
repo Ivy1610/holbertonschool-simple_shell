@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <string.h>
 
 char readCommand(char **argv, char **env);
 char *getPath(char **env, const char *getCmd);
