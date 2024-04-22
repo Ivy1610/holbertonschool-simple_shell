@@ -3,8 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX_INPUT_SIZE 1024
-#define MAX_ARGS 64
+#define BUFFER_SIZE 1024
 
 /**
  * main - function main
@@ -13,23 +12,34 @@
 
 int main(void)
 {
-	char *args[MAX_ARGS];
-	char *env[] = {"PATH=/bin/ls, NULL"};
+	char buffer[BUFFER_SIZE];
+	char bytes_read;
 
 	while (1)
 	{
-		printf("CisNotFun;)$ ");
-		fflush(stdout);
-		if (readCommand(args, env) == -1)
+		write(STDOUT_FILENO, "CisNotFun$ ", 2);
+		bytes_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+
+		if (bytes_read == -1)
 		{
-			break;
+			perror("read");
+			exit(EXIT_FAILURE);
 		}
-		if (args[0] != NULL)
+		for (int i = 0; i < bytes_read; i++)
 		{
-			if (exeCmd(args, env) == -1)
+			if (buffer[i] == '\n')
 			{
-				fprintf(stderr, "Error: %s\n", args[0]);
+				buffer[i] = '\0';
+				break;
 			}
+		}
+
+		int status = system(buffer);
+
+		if (status == -1)
+		{
+			perror("system");
+			exit(EXIT_FAILURE);
 		}
 	}
 	return (0);
