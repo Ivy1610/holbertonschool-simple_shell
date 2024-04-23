@@ -1,9 +1,8 @@
 #include "shell.h"
 
 /**
- * exeCmd - function to execute user's command
- * @args: array of strings containing the command and its arguments
- * @env: array of strings representing the environment variables
+ * execute_command - function to execute user's command
+ * @command: charÂ
  * Return: 0 on success, -1 on failure.
  */
 void execute_command(char *command)
