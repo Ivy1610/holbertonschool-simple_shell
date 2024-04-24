@@ -26,13 +26,14 @@ char **splitLine(char *line)
 	{
 		if (token_index >= MAX_TOKENS - 1)
 		{
-			fprintf(stderr, "too many tokens (exceeds max)\n");
+			fprintf(stderr, "Exceeds max\n");
 			free(tokens);
 			return (NULL);
 		}
-		tokens[token_index] = token;
+		tokens[token_index] = strdup(token);
 		token_index++;
 		token = strtok(NULL, " \t\r\n\a");
 	}
+	tokens[token_index] = NULL;
 	return (tokens);
 }

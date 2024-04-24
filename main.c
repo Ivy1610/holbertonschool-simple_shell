@@ -2,45 +2,93 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#define BUFFER_SIZE 1024
+#define MAX_ARGS 10
+#define UNUSED(x) (void)(x)
+/**
+ * print_env - imprime l'environement
+ * @env: environnement variable
+ */
+void print_env(char **env)
+{
+	int i = 0;
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	return;
+}
 
 /**
- * main - function main
+ * main - commence le programme
+ * @argc: nombre d'arguments
+ * @argv: chaine d'arguments
+ * @env: liste d'environement variable
  * Return: 0 if success
  */
 
-int main(void)
+
+int main(int argc, char **argv, char **env)
 {
-	char buffer[BUFFER_SIZE];
-	char bytes_read;
+	char *command = NULL;
+	int status;
+	ssize_t bytes_read;
+	size_t buffsize = 0;
+	char **args;
+	pid_t pid;
+
+	UNUSED(argc);
+	UNUSED(argv);
+
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "CisNotFun$ ", 2);
-		bytes_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (isatty(STDIN_FILENO))
+		{
+			printf("CisNotFun;)$ ");
+			fflush(stdout);
+		}
 
+		bytes_read = getline(&command, &buffsize, stdin);
 		if (bytes_read == -1)
 		{
-			perror("read");
-			exit(EXIT_FAILURE);
+			perror("getline failed");
+			break;
 		}
-		for (int i = 0; i < bytes_read; i++)
+		if (bytes_read > 0 && command[bytes_read - 1] == '\n')
 		{
-			if (buffer[i] == '\n')
-			{
-				buffer[i] = '\0';
-				break;
-			}
+			command[bytes_read - 1] = '\0';
+		}
+		args = splitLine(command);
+		if (args == NULL)
+		{
+			fprintf(stderr, "failed to split command\n");
+			free(command);
+			continue;
 		}
 
-		int status = system(buffer);
-
-		if (status == -1)
+		pid = fork();
+		if (pid == -1) 
 		{
-			perror("system");
+			perror("Erreur fork");
+			free(command);
+			free(args);
 			exit(EXIT_FAILURE);
 		}
+		else if (pid == 0)
+		{
+			exeCmd(args, env);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			waitpid(pid, &status, 0);
+		}
+
+		free(command);
+		free(args);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

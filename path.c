@@ -1,49 +1,79 @@
 #include "shell.h"
 #include <string.h>
 #include <unistd.h>
-/**
-* getPath - function to get path from the environment
-* @env: environment variable
-* @getCmd: name of the command to find in the PAT
-* Return: return path or NULL
-**/
 
+#define MAX_PATH_LENGTH 1024
+/**
+ * getEnv - cherche l'environement du path
+ * @env: environnement variable
+ * @varName: nom de  l'environement variable
+ * Return: NULL
+ */
+char *getEnv(char **env, const char *varName)
+{
+	int i = 0;
+
+	while (env[i] != NULL)
+	{
+		if (strncmp(env[i], varName, strlen(varName)) == 0)
+		{
+			return (env[i] + strlen(varName));
+		}
+		i++;
+	}
+	return (NULL);
+}
+/**
+ * getPath - function to get path from the environment
+ * @env: environment variable
+ * @getCmd: name of the command to find in the PAT
+ * Return: return path or NULL
+ */
 char *getPath(char **env, const char *getCmd)
 {
-	char *cmdValue, *path, *pathCopy = NULL;
-	char *pathKey = _getenv(env, "PATH");
-	size_t cmdValueSize = 0;
+	char *fullPath, *pathCopy = NULL;
+	char *pathEnv = NULL;
+	char *token;
+	size_t sizePath;
 
-	while (pathKey == NULL)
+	while (*env)
+	{
+		if (strncmp(*env, "PATH=", 5) == 0)
+		{
+			pathEnv = *env + 5;
+			break;
+		}
+		env++;
+	}
+	if (!pathEnv)
 	{
 		fprintf(stderr, "Error: PATH env variable not found\n");
 		return (NULL);
 	}
-	pathCopy = strdup(pathKey);
+	pathCopy = strdup(pathEnv);
 	if (!pathCopy)
 	{
-		fprintf(stderr, "unable to allocate buffer\n");
+		perror("Memory allocation erreur");
 		exit(EXIT_FAILURE);
 	}
-
-	for (char *path = strtok(pathCopy, "/");
-			path != NULL; path = strtok(NULL, "/"))
+	token = strtok(pathCopy, ":");
+	while (token)
 	{
-		cmdValueSize = strlen(path) + strlen(getCmd) + 2;
-		cmdValue = malloc(cmdValueSize);
-		if (cmdValue == NULL)
+		sizePath = strlen(token) + strlen(getCmd) + 2;
+		fullPath = (char *)malloc(sizePath);
+		if (!fullPath)
 		{
-			fprintf(stderr, "unable to allocate buffer\n");
+			perror("Memory allocation error");
 			exit(EXIT_FAILURE);
 		}
-		sprintf(cmdValue, "%s/%s", path, getCmd);
+		sprintf(fullPath, "%s/%s", token, getCmd);
 
-		if (access(cmdValue, X_OK) == 0)
+		if (access(fullPath, X_OK) == 0)
 		{
-			free(pathCopy);
-			return (cmdValue);
+			return (fullPath);
 		}
-		free(cmdValue);
+		free(fullPath);
+		token = strtok(NULL, ":");
 	}
 	free(pathCopy);
 	return (NULL);

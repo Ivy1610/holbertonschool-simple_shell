@@ -9,44 +9,43 @@
  * readCommand - function to take user's input
  * @argv: array of strings to arguments
  * @env: array of string representing the environment variable
- * Return: size (numbers if characters that users input)
+ * Return: 0
  */
 
 char readCommand(char **argv, char **env)
 {
 	size_t n = 0;
+	ssize_t bytes_read;
 	char *buff = NULL;
-	int size;
 	char *token;
 	int argCount = 0;
 
-	size = getline(&buff, &n, stdin);
+	bytes_read = getline(&buff, &n, stdin);
 
-	if (size == -1)
+	if (bytes_read == -1)
 	{
 		perror("getline failed");
 		free(buff);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
-	if (buff[size - 1] == '\n')
+	if (buff[bytes_read - 1] == '\n')
 	{
-		buff[size - 1] = '\0';
+		buff[bytes_read - 1] = '\0';
 	}
 
-	token = strtok(buff, " /n");
+	token = strtok(buff, " \n");
 
 	while (token != NULL && argCount < MAX_ARGS - 1)
 	{
 		argv[argCount++] = token;
-		token = strtok(NULL, " /n");
+		token = strtok(NULL, " ");
 	}
 	argv[argCount] = NULL;
-
 	if (argv[0] != NULL)
 	{
 		exeCmd(argv, env);
 	}
 	free(buff);
-	return (size);
+	return (0);
 }
