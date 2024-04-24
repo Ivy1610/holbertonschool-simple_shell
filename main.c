@@ -22,13 +22,12 @@ void print_env(char **env)
 }
 
 /**
- * main - commence le programme
+ * main - main function
  * @argc: nombre d'arguments
  * @argv: chaine d'arguments
  * @env: liste d'environement variable
- * Return: 0 if success
+ * Return: EXIT_SUCCESS
  */
-
 
 int main(int argc, char **argv, char **env)
 {
@@ -42,9 +41,9 @@ int main(int argc, char **argv, char **env)
 	UNUSED(argc);
 	UNUSED(argv);
 
-
 	while (1)
 	{
+
 		if (isatty(STDIN_FILENO))
 		{
 			printf("CisNotFun;)$ ");
@@ -79,7 +78,7 @@ int main(int argc, char **argv, char **env)
 		}
 		else if (pid == 0)
 		{
-			exeCmd(args, env);
+			executCommand(args, env);
 			exit(EXIT_FAILURE);
 		}
 		else

@@ -44,8 +44,9 @@ char readCommand(char **argv, char **env)
 	argv[argCount] = NULL;
 	if (argv[0] != NULL)
 	{
-		exeCmd(argv, env);
+		executCommand(argv, env);
 	}
 	free(buff);
+	free(token);
 	return (0);
 }
