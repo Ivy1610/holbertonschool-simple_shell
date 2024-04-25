@@ -174,8 +174,8 @@ Simple shell 0.4 +
 Implement the env built-in, that prints the current environment
 
 ## flowchart
+<img width="335" alt="image" src="https://github.com/Ivy1610/holbertonschool-simple_shell/assets/157039212/b8f1e2cf-cde4-497a-b092-04769ca74313">
 
-![image](https://www.figma.com/file/C6exVsqszV29bC7VnRjiEW/project-simple-shell?type=whiteboard&node-id=875%3A1085&t=2BdhiSTmbps4DjKN-1)
 
 ##Authors
 
