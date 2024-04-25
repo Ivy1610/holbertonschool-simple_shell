@@ -42,13 +42,11 @@ int main(int argc, char **argv, char **env)
 
 	while (1)
 	{
-
 		if (isatty(STDIN_FILENO))
 		{
 			printf("CisNotFun;)$ ");
 			fflush(stdout);
 		}
-
 		bytes_read = getline(&command, &buffsize, stdin);
 		if (bytes_read == -1)
 		{
@@ -67,7 +65,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if (strcmp(command, "exit") == 0)
 		{
-		       	_exit(0);
+			_exit(0);
 		}
 		args = splitLine(command);
 		if (args == NULL)
@@ -76,9 +74,8 @@ int main(int argc, char **argv, char **env)
 			free(command);
 			continue;
 		}
-
 		pid = fork();
-		if (pid == -1) 
+		if (pid == -1)
 		{
 			perror("Erreur fork");
 			free(command);
@@ -94,7 +91,6 @@ int main(int argc, char **argv, char **env)
 		{
 			waitpid(pid, &status, 0);
 		}
-
 		free(command);
 		free(args);
 	}

@@ -6,8 +6,7 @@
  */
 void _exit(int status)
 {
-    printf("exit\n");
-    exit(status);
-    
+	printf("exit\n");
+	exit(status);
 }
 
