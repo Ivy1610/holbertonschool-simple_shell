@@ -17,6 +17,7 @@ int executCommand(char *args[], char **env);
 char **splitLine(char *line);
 char *getEnv(char **env, const char *varName);
 void print_env(char **env);
+void _exit(int status);
 
 
 

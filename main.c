@@ -65,6 +65,10 @@ int main(int argc, char **argv, char **env)
 		{
 			command[bytes_read - 1] = '\0';
 		}
+		if (strcmp(command, "exit") == 0)
+		{
+		       	_exit(0);
+		}
 		args = splitLine(command);
 		if (args == NULL)
 		{
