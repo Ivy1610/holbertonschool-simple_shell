@@ -70,6 +70,7 @@ char *getPath(char **env, const char *getCmd)
 
 		if (access(fullPath, X_OK) == 0)
 		{
+			free(pathCopy);
 			return (fullPath);
 		}
 		free(fullPath);
