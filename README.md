@@ -38,13 +38,13 @@
 
 ## More Info
 
-#Output
+# Output
 
 * Unless specified otherwise, your program must have the exact same output as sh (/bin/sh) as well as the exact same error output.
 * The only difference is when you print an error, the name of the program must be equivalent to your argv[0] (See below)
 
 
-#List of allowed functions and system calls+
+# List of allowed functions and system calls+
 
 * all functions from string.h
 * access (man 2 access)
@@ -88,12 +88,12 @@
 ### Compilation
 
 Your shell will be compiled this way:
-
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```bash
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+```
 example
 
-
+```bash
 $ ./hsh
 ($) /bin/ls
 hsh main.c shell.c
@@ -104,7 +104,7 @@ $
 
 But also in non-interactive mode.
 
-```
+```bash
 $ echo "/bin/ls" | ./hsh
 hsh main.c shell.c test_ls_2
 $
@@ -121,8 +121,8 @@ $
 1.Clone the repo 
 ```bash
 https://github.com/Ivy1610/holbertonschool-simple_shell.git
-
-##Tasks
+```
+## Tasks
 
 . Simple shell 0.1
 
