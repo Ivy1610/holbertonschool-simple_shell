@@ -18,7 +18,6 @@ void print_env(char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
-	return;
 }
 
 /**
@@ -54,9 +53,15 @@ int main(int argc, char **argv, char **env)
 		if (bytes_read == -1)
 		{
 			perror("getline failed");
+			free(command);
+			exit(EXIT_FAILURE);
+		}
+		else if (bytes_read == 0)
+		{
+			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-		if (bytes_read > 0 && command[bytes_read - 1] == '\n')
+		else if (command[bytes_read - 1] == '\n')
 		{
 			command[bytes_read - 1] = '\0';
 		}
