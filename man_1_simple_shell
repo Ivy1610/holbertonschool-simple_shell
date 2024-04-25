@@ -1,0 +1,52 @@
+.TH man_1_simple_shell "Version 1.0" "Dater du 25/04/2024"
+.SH NAME
+simple_shell \- Simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B simple shell
+[\fIoptions\fP]
+
+.SH DESCRIPTION
+\fBsimple_shell\fP is a simple UNIX command line interpreter that waits for a user command and executes it.
+
+
+.SH OPTIONS
+There are no options available for \fBsimple_shell\fP.
+
+
+.SH UTILISATION
+.LP
+.B simple_shell
+[\fIoptions\fP]
+
+.SH ARGUMENTS
+.IP "\fIargc\fP"
+Number of arguments passed to the interpreter.
+.IP "\fIargv\fP"
+List of arguments passed to the interpreter, including the program name.
+.IP "\fIenv\fP"
+List of environment variables passed to the interpreter.
+
+
+.SH OPERATION
+This program starts a command line interpreter that reads commands entered by the user from standard input (stdin) or a file and executes them.
+It displays a command prompt "CisNotFun;)$ " and waits for the user to the enter a command.
+
+The command line interpreter reads the command entered by the user using the getline() function to get the entire line. It then splits the line into tokens using 
+the splitLine() function to get the individual words of the command.
+
+Next, it creates a child process using fork(). In the child process, it executes the command using the executCommand(), passing the appropriate arguments and environment variables.
+
+The parents waits for the child process to terminate using waitpid().
+
+.SH RETURN VALUE
+This function always returns EXIT_SUCCESS (0) when it completes successfully.
+
+.SH ERRORS
+In case of an error during program execution or command execution,appropriate error messages will be displayed on the standard error (stderr) output and 
+the program will terminate with EXIT_FAILURES (1).
+
+
+.SH AUTEUR
+Written by [Fatma GMATI], [Moctar MOCTAR], [Yveline MENDES]
+
